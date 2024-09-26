@@ -2,12 +2,14 @@ package com.virtusa.weather.ui.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,21 +46,27 @@ fun WeatherScreen(modifier: Modifier, viewModel: WeatherViewModel = hiltViewMode
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top
     ) {
-        TextField(
-            value = city,
-            onValueChange = { city = it },
-            label = { Text("City to Search") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-        Spacer(modifier = Modifier.height(12.dp))
+        Row(modifier = modifier.fillMaxWidth()) {
 
-        Button(onClick = {
-            isFetching = true
-            viewModel.fetchWeatherData(city)
-        }) {
-            Text(text = "Search")
+            TextField(
+                value = city,
+                onValueChange = { city = it },
+                label = { Text("City") },
+                modifier = Modifier.weight(0.65f),
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Button(
+                onClick = {
+                    isFetching = true
+                    viewModel.fetchWeatherData(city)
+                },
+                modifier = Modifier.weight(0.3f)
+            ) {
+                Text(text = "Search")
+            }
         }
+
         Spacer(modifier = Modifier.height(12.dp))
 
         when (weatherUiState) {
